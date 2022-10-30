@@ -1,6 +1,6 @@
 <template>
   <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" v-model="addVal" @keyup.enter="addTitle">
+    <input type="text" placeholder="请输入你的任务名称，按回车键确认" v-model="title" @keyup.enter="addTitle">
   </div>
 </template>
 
@@ -10,17 +10,17 @@ export default {
   name: 'TodoHeader',
   data() {
     return {
-      addVal: ''
+      title: ''
     };
   },
-  props: ["todos", "addTodo"],
+  props: ["addTodo"],
   methods: {
     addTitle() {
-      if (this.addVal) {
-        this.addVal = this.addVal.trim();
-        let obj = { id: nanoid(), title: this.addVal, done: false };
+      if (this.title) {
+        this.title = this.title.trim();
+        let obj = { id: nanoid(), title: this.title, done: false };
         this.addTodo(obj);
-        this.addVal = '';
+        this.title = '';
       }
     }
   }

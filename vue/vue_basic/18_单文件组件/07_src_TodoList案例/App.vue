@@ -4,7 +4,7 @@
       <div class="todo-wrap">
         <TodoHeader :addTodo="addTodo" />
         <TodoList :todos="todos" :checkDone="checkDone" :deleteTodo="deleteTodo" />
-        <TodoFooter v-show="todos.length > 0" :todos="todos" :clearTodo="clearTodo" :checkAll="checkAll" />
+        <TodoFooter :todos="todos" :clearAllTodo="clearAllTodo" :checkAll="checkAll" />
       </div>
     </div>
 
@@ -34,16 +34,15 @@ export default {
       for (let todo of this.todos) {
         if (todo.id === id) {
           todo.done = !todo.done;
-          console.log(todo.done);
         }
       }
     },
     addTodo(obj) {
       if (obj) {
-        this.todos.push(obj);
+        this.todos.unshift(obj);
       }
     },
-    clearTodo() {
+    clearAllTodo() {
       this.todos = this.todos.filter((todo) => {
         return !todo.done;
       });
