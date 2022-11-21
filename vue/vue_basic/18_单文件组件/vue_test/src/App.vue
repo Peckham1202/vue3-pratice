@@ -1,109 +1,32 @@
 <template>
-  <div id="root">
-    <div class="todo-container">
-      <div class="todo-wrap">
-        <TodoHeader :addTodo="addTodo" />
-        <TodoList :todos="todos" :checkDone="checkDone" :deleteTodo="deleteTodo" />
-        <TodoFooter :todos="todos" :clearAllTodo="clearAllTodo" :checkAll="checkAll" />
-      </div>
-    </div>
-
+  <div>
+    <button @click="getStudents">获取学生信息</button>
+    <button @click="getCars">获取汽车信息</button>
   </div>
 </template>
 
 <script>
-import TodoHeader from './components/TodoHeader.vue';
-import TodoFooter from './components/TodoFooter.vue';
-import TodoList from './components/TodoList.vue';
-
+import axios from 'axios';
 export default {
   name: 'App',
-  components: { TodoHeader, TodoFooter, TodoList },
-  data() {
-    return {
-      todos: JSON.parse(localStorage.getItem('todos')) || []
-    }
-  },
   methods: {
-    checkDone(id) {
-      for (let todo of this.todos) {
-        if (todo.id === id) {
-          todo.done = !todo.done;
-        }
-      }
+    getStudents() {
+      axios.get('http://localhost:8080/api1/students').then(
+        response => console.log('请求成功了', response.data),
+        error => console.log('请求失败了', error.message)
+      )
     },
-    addTodo(obj) {
-      if (obj) {
-        this.todos.unshift(obj);
-      }
-    },
-    clearAllTodo() {
-      this.todos = this.todos.filter((todo) => {
-        return !todo.done;
-      });
-    },
-    deleteTodo(id) {
-      this.todos = this.todos.filter((todo) => {
-        return todo.id !== id;
-      });
-    },
-    checkAll(done) {
-      for (let todo of this.todos) {
-        todo.done = done;
-      }
-    }
-  },
-  watch: {
-    todos: {
-      deep: true,
-      handler(value) {
-        localStorage.setItem('todos', JSON.stringify(value));
-      }
+
+    getCars() {
+      axios.get('http://localhost:8080/api2/cars').then(
+        response => console.log('请求成功了', response.data),
+        error => console.log('请求失败了', error.message)
+      )
     }
   }
 }
 </script>
 
 <style>
-body {
-  background: #fff;
-}
 
-.btn {
-  display: inline-block;
-  padding: 4px 12px;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: #da4f49;
-  border: 1px solid #bd362f;
-}
-
-.btn-danger:hover {
-  color: #fff;
-  background-color: #bd362f;
-}
-
-.btn:focus {
-  outline: none;
-}
-
-.todo-container {
-  width: 600px;
-  margin: 0 auto;
-}
-
-.todo-container .todo-wrap {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
 </style>
