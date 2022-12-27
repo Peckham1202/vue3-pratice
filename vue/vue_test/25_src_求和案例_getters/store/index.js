@@ -33,9 +33,7 @@ const mutations = {
 
 //准备state——用于存储数据
 const state = {
-  sum: 0,
-  school: 'Bilibili',
-  subject: '前端'
+  sum: 0
 };
 
 //准备getters——用于将state中的数据进行加工
